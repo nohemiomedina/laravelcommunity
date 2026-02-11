@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel Tricks - Unified IA Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            color: #111827;
+            background: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Shared Top Banner */
+        .community-banner {
+            background: black;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .community-banner .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #FFFFFF;
+        }
+
+        .community-banner nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.2s;
+        }
+
+        .community-banner nav a:hover {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
+
+        .community-banner nav a.active {
+            color: #F59E0B;
+            font-weight: 500;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 20px 0;
+            position: sticky;
+            top: 49px;
+            z-index: 90;
+        }
+
+        .main-header .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 40px 12px 16px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #F9FAFB;
+            transition: all 0.2s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #F59E0B;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #F59E0B;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #2563EB;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #F59E0B;
+            border: 1px solid #F59E0B;
+        }
+
+        .btn-secondary:hover {
+            background: #F9FAFB;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            min-height: calc(100vh - 130px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #F9FAFB;
+            border-right: 1px solid #E5E7EB;
+            padding: 24px 20px;
+            position: sticky;
+            top: 130px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6B7280;
+            margin-bottom: 16px;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+
+        .filter-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-section-title:hover {
+            color: #F59E0B;
+        }
+
+        .collapse-icon {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        /* Featured Checkbox */
+        .featured-filter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .featured-filter:hover {
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .featured-filter input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .featured-filter label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .featured-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Sort Radio Buttons */
+        .sort-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sort-option:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .sort-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .sort-option label {
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Category/Type Checkboxes */
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-checkbox:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .filter-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .filter-checkbox label {
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .filter-checkbox-count {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        /* Tags */
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-filter {
+            background: white;
+            border: 1px solid #E5E7EB;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag-filter:hover {
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.05);
+            color: #F59E0B;
+        }
+
+        .tag-filter.active {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        .see-all-link {
+            display: block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #F59E0B;
+            text-decoration: none;
+        }
+
+        .see-all-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Clear Filters */
+        .clear-filters {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #E5E7EB;
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #6B7280;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .clear-filters:hover {
+            border-color: #DC2626;
+            color: #DC2626;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 24px;
+            background: white;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .results-count {
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .results-count strong {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s;
+            position: relative;
+            border-left: 3px solid transparent;
+        }
+
+        .content-card:hover {
+            border-left-color: #F59E0B;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .card-description {
+            color: #6B7280;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #6B7280;
+            padding-top: 12px;
+            border-top: 1px solid #F3F4F6;
+            margin-bottom: 10px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .card-tag {
+            background: rgba(245, 158, 11, 0.1);
+            color: #F59E0B;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .category-badge {
+            background: rgba(245, 158, 11, 0.1);
+            color: #B45309;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-wrap: wrap;
+            }
+            
+            .search-container {
+                order: 3;
+                width: 100%;
+                max-width: none;
+            }
+            
+            .sidebar {
+                display: none; /* Would be a drawer on mobile */
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #374151;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.sidebar-links a:hover {
+    background: #F3F4F6;
+}
+
+
+.tag-container {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag-label {
+    background:#F3F4F6;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    color:#374151;
+    cursor:pointer;
+}
+
+.tag-count{
+    color:#6B7280;
+    margin-left:4px;
+}
+
+
+/* Sidebar typography refinement */
+.sidebar-links a {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.sidebar-header {
+    font-size: 11px;
+    letter-spacing: .04em;
+}
+
+.tag-label {
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+
+/* Reduce vertical spacing in sidebar sections */
+.sidebar-links {
+    gap: 4px;
+}
+
+.sidebar-links a {
+    padding: 4px 8px;
+}
+
+.sidebar-header {
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+</style>
+</head>
+<body>
+    <!-- Shared Top Banner -->
+    <div class="community-banner">
+        <div class="container">
+            <span>Laravel Community Tools by Tighten</span>
+            
+            <nav>
+                <a href="nova-packages-unified.html">Nova Packages</a>
+                <a href="laravel-tricks-unified.html" class="active">Laravel Tricks</a>
+                <a href="forge-recipes-unified-sidebar.html">Forge Recipes</a>
+            </nav>
+    
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <img src="logo-laraveltricks.svg" height="40px">
+            </a>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search tricks...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="header-actions">
+                <a href="#" class="btn btn-secondary">Create New</a>
+                <a href="#" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        
+
+<aside class="sidebar">
+    <div class="sidebar-header">BROWSE</div>
+    <nav class="sidebar-links">
+        <a href="#">All Tricks</a>
+        <a href="#">Most Recent</a>
+        <a href="#">Most Popular</a>
+    </nav>
+
+    <div class="sidebar-header">CATEGORIES</div>
+    <nav class="sidebar-links">
+        <a href="#">Eloquent</a><a href="#">Routing</a><a href="#">Views</a><a href="#">Requests and Input</a><a href="#">Form</a><a href="#">Configuration</a><a href="#">Packages</a><a href="#">Debugging</a><a href="#">Templating</a><a href="#">Raw queries</a><a href="#">Performance</a><a href="#">Session</a><a href="#">Cache</a><a href="#">Facade</a><a href="#">Pagination</a><a href="#">IoC</a><a href="#">Localization</a><a href="#">Mail</a><a href="#">Queues</a><a href="#">Composer</a>
+    </nav>
+
+    <div class="sidebar-header">TAGS</div>
+    <div class="tag-container">
+        <span class="tag-label">database <span class="tag-count">8</span></span><span class="tag-label">5.0 <span class="tag-count">8</span></span><span class="tag-label">4.0 <span class="tag-count">8</span></span><span class="tag-label">4.1 <span class="tag-count">8</span></span><span class="tag-label">templating <span class="tag-count">8</span></span><span class="tag-label">models <span class="tag-count">8</span></span><span class="tag-label">view data <span class="tag-count">8</span></span><span class="tag-label">blade <span class="tag-count">8</span></span><span class="tag-label">patterns <span class="tag-count">8</span></span><span class="tag-label">testing <span class="tag-count">8</span></span><span class="tag-label">filters <span class="tag-count">8</span></span><span class="tag-label">troubleshooting <span class="tag-count">8</span></span><span class="tag-label">repository <span class="tag-count">8</span></span><span class="tag-label">relationships <span class="tag-count">8</span></span><span class="tag-label">eloquent <span class="tag-count">8</span></span><span class="tag-label">macros <span class="tag-count">8</span></span><span class="tag-label">4.2 <span class="tag-count">8</span></span><span class="tag-label">authentication <span class="tag-count">8</span></span><span class="tag-label">3.0 <span class="tag-count">8</span></span><span class="tag-label">events <span class="tag-count">8</span></span><span class="tag-label">api <span class="tag-count">8</span></span><span class="tag-label">facades <span class="tag-count">8</span></span><span class="tag-label">5.5 <span class="tag-count">8</span></span><span class="tag-label">scheduling <span class="tag-count">8</span></span><span class="tag-label">5.6 <span class="tag-count">8</span></span><span class="tag-label">commands <span class="tag-count">8</span></span><span class="tag-label">5.8 <span class="tag-count">8</span></span><span class="tag-label">sitemap <span class="tag-count">8</span></span><span class="tag-label">notifications <span class="tag-count">8</span></span>
+    </div>
+</aside>
+
+
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <div class="content-header">
+                <div class="results-count">
+                    Showing <strong>1,247 tricks</strong>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Trick Card 1 -->
+                <article class="content-card">
+                    <div class="category-badge">Packages</div>
+                    <h3 class="card-title">Laravel Ingest: Product Importer</h3>
+                    <p class="card-description">A powerful Laravel package for importing products from various sources. Supports CSV, JSON, XML and custom formats with validation and transformation.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 zappzerapp</span>
+                        <span class="meta-item">📅 6 days ago</span>
+                        <span class="meta-item">👁️ 97</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">facades</span>
+                        <span class="card-tag">import</span>
+                        <span class="card-tag">csv</span>
+                    </div>
+                </article>
+
+                <!-- Trick Card 2 -->
+                <article class="content-card">
+                    <div class="category-badge">Packages</div>
+                    <h3 class="card-title">Resume Parser with AI</h3>
+                    <p class="card-description">AI-powered resume parser for Laravel applications. Extract structured data from CVs including experience, education, skills and contact information.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 dawid.makowski</span>
+                        <span class="meta-item">📅 1 year ago</span>
+                        <span class="meta-item">👁️ 10.4k</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">api</span>
+                        <span class="card-tag">ai</span>
+                        <span class="card-tag">parser</span>
+                    </div>
+                </article>
+
+                <!-- Trick Card 3 -->
+                <article class="content-card">
+                    <div class="category-badge">Eloquent</div>
+                    <h3 class="card-title">Translatable Columns</h3>
+                    <p class="card-description">Add multi-language support to your Eloquent models without additional tables. Store translations in JSON columns with automatic locale detection.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 a7medKhalid</span>
+                        <span class="meta-item">📅 1 year ago</span>
+                        <span class="meta-item">👁️ 19.5k</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">models</span>
+                        <span class="card-tag">database</span>
+                        <span class="card-tag">i18n</span>
+                    </div>
+                </article>
+
+                <!-- Trick Card 4 -->
+                <article class="content-card">
+                    <div class="category-badge">Routing</div>
+                    <h3 class="card-title">FastAPI-Style Attribute Routing</h3>
+                    <p class="card-description">Use PHP 8 attributes for route definitions similar to FastAPI. Clean, declarative routing directly on controller methods.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 mustafakhaleddev</span>
+                        <span class="meta-item">📅 1 year ago</span>
+                        <span class="meta-item">👁️ 11.3k</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">patterns</span>
+                        <span class="card-tag">api</span>
+                        <span class="card-tag">attributes</span>
+                    </div>
+                </article>
+
+                <!-- Trick Card 5 -->
+                <article class="content-card">
+                    <div class="category-badge">Performance</div>
+                    <h3 class="card-title">Redux-Inspired State Handling</h3>
+                    <p class="card-description">Implement Redux-style state management in Laravel applications. Predictable state container with actions and reducers for complex applications.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 mustafakhaleddev</span>
+                        <span class="meta-item">📅 1 year ago</span>
+                        <span class="meta-item">👁️ 11.3k</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">patterns</span>
+                        <span class="card-tag">repository</span>
+                        <span class="card-tag">state</span>
+                    </div>
+                </article>
+
+                <!-- Trick Card 6 -->
+                <article class="content-card">
+                    <div class="category-badge">Eloquent</div>
+                    <h3 class="card-title">Full Text Search with Scout</h3>
+                    <p class="card-description">Combine Laravel Scout with Spatie Query Builder for powerful full-text search capabilities with filtering, sorting and pagination.</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👤 flix</span>
+                        <span class="meta-item">📅 1 year ago</span>
+                        <span class="meta-item">👁️ 11.7k</span>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">patterns</span>
+                        <span class="card-tag">filters</span>
+                        <span class="card-tag">search</span>
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
